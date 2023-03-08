@@ -1,20 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Color from '../constants/color';
-import {Text, StyleSheet, View, TextInput, Button } from "react-native";
+import Input from './Input';
+import {Text,TouchableWithoutFeedback,StyleSheet, View, Button, TouchableWithoutFeedback, Keyboard } from "react-native";
 
 const StartGameScreen = prop =>{
+   const [enteredValue, setEnteredValue] = useState('');
+   const numberInputHandler = inputText => {
+      setEnteredValue(inputText.replace(/[^0-9]/g, ''));
+   }
+   const resetInputHandler  = ()=>{
+      setEnteredValue('');
+   }
     return (
+      <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss();}}>
         <View style={styles.screen}>
             <Text style={styles.title}>The Game Screen is here</Text>
             <View style={styles.inputContainer}>
                 <Text style={styles.title}>Select a Number</Text>
-                <TextInput />
+                <Input style={styles.input} 
+                blurOnSubmit 
+                autoCapitalize='none' 
+                autoCorrect={false}
+                keyboardType='number-pad'
+                maxLength={2}
+                onChangeText={numberInputHandler}
+                value={enteredValue} />
                 <View style={styles.buttonContainer}>
-                  <View style={styles.button}><Button title="Reset" onPress={()=> {}} color={Color.secondary}/></View>  
+                  <View style={styles.button}><Button title="Reset" onPress={resetInputHandler} color={Color.secondary}/></View>  
                   <View style={styles.button}><Button title="Confirm" onPress={()=> {}} color={Color.primary}/></View> 
                 </View>
             </View>
         </View>
+         </TouchableWithoutFeedback>
      );
 };
 
@@ -50,6 +67,10 @@ const styles = StyleSheet.create({
      button: {
       width:100
      },
+     input:{
+      width:60,
+      textAlign: 'center'
+     }
 });
 
 export default StartGameScreen;
