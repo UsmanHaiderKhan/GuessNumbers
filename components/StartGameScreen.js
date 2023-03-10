@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-import {Text,TouchableWithoutFeedback,StyleSheet, View, Button, Keyboard } from "react-native";
+import {Text,TouchableWithoutFeedback,StyleSheet, View, Button,Alert, Keyboard } from "react-native";
 import Card  from './Card';
+import NumberContainer from './NumberContainer'
 import Color from '../constants/color';
 import Input from './Input';
 
@@ -19,16 +20,26 @@ const StartGameScreen = prop =>{
    }
    const confirmInputHandler = ()=>{
       const chosenNumber = parseInt(enteredValue);
-      if(chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99){
+      if( isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99){
+         Alert.alert('Invalid Input Input','Number should between the 1 to 99',
+           [{text: 'OK',style:'destructive', onPress:resetInputHandler}]
+         );
          return;
       }
          setConfirm(true);
          setSelectedNumber(chosenNumber);
          setEnteredValue('');
+         Keyboard.dismiss();
    }
    let confirmedOutPut;
    if(confirm){
-      confirmedOutPut = <Text>ChosenNumber : {selectedNumber}</Text>
+      confirmedOutPut = 
+      <Card style={styles.summeryContainer}>
+         <Text>You Selected</Text>
+         <NumberContainer>{selectedNumber}</NumberContainer>
+         <Button title='Start Game'/>
+      </Card>
+     
    }
 
     return (
@@ -83,6 +94,10 @@ const styles = StyleSheet.create({
      input:{
       width:60,
       textAlign: 'center'
+     },
+     summeryContainer:{
+      marginTop: 20,
+      alignItems: 'center'
      }
 });
 
