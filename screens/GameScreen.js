@@ -18,7 +18,7 @@ const generateRandomBetween  = (min,max,exclude) =>{
 }
 
 const GameScreen = props =>{
-const [currentGuess,setCurrentGuess] = useState(generateRandomBetween(1,100, props.userChoice));
+const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 100, props.userChoice));
 const [rounds, setRounds] = useState(0);
 const currentLow = useRef(1);
 const currentHigh = useRef(100);
@@ -27,7 +27,7 @@ useEffect(()=>{
    if(currentGuess === props.userChoice){
      props.onGameOver(rounds); 
    }
-},[currentGuess,userChoice, onGameOver]);
+},[currentGuess, userChoice, onGameOver]);
 
 const nextGuessHandler = direction =>{
    if((direction === 'Lower' && currentGuess < props.userChoice) || (direction === 'Greater' && currentGuess > props.userChoice)){ 
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
       marginTop: 20,
       width: 300,
       maxWidth: '80%'
-     }
+     },
 
 });
 
