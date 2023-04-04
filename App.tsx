@@ -1,18 +1,30 @@
 import React,{useState} from 'react'
 import { StyleSheet, View } from 'react-native';
+import * as Font from 'expo-font';
+import { AppLoading } from "expo";
 
 import  Header  from './components/Header';
 import GameScreen from './screens/GameScreen';
 import StartGameScreen from './screens/StartGameScreen';
 import GameOverScreen from './screens/GameOverScreen';
 
-export default function App() {
-   const[userNumber, setUserNumber]  = useState();
-   const[guessRounds, setGuessRounds] = useState(0);
+const fetchFonts = () =>{
+  return Font.loadAsync({
+    'popper-reg': require('./assets/fonts/Poppins-Regular.ttf'),
+    'popper-bold': require('./assets/fonts/Poppins-Bold.ttf')
+  });
+}
 
+export default function App() {
+   const [userNumber, setUserNumber]  = useState();
+   const [guessRounds, setGuessRounds] = useState(0);
+   const [dataLoaded, setDataLoaded] = useState(false);
+   if(!dataLoaded){
+    // return <AppLoading startAsync={fetchFonts} onFinish={()=> setDataLoaded(true)} onError={(err:any)=> console.log(err)} />;
+   }
    const newGameHandler = () => {
     setGuessRounds(0);
-    setUserNumber();
+    setUserNumber;
    };
 
    const startGameHandler = (selectedNumber:any) => {
